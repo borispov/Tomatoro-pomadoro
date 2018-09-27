@@ -24,6 +24,7 @@ class App extends Component {
 
   handleReset = () => {
     this.setState({
+      isBreak: false,
       isPaused: true,
       timeInSeconds: this.state.workTime * 60
     })
@@ -37,17 +38,23 @@ class App extends Component {
     if (isPaused) {
       this.timer = setInterval(this.countDown, 1000)
     }
-    console.log(isPaused)
   }
 
-  countDown = () => {
+  countDown = async () => {
+    const { isBreak, workTime, breaklength } = this.state
     let seconds = this.state.timeInSeconds
     seconds--
     if (seconds <= 0) {
       clearInterval(this.timer)
-      this.setState({ isBreak: !this.state.isBreak })
+      const newTimes = (isBreak ? workTime : breaklength) * 60
+      await this.setState({
+        timeInSeconds: newTimes,
+        isBreak: !isBreak
+      })
+      this.timer = setInterval(this.countDown, 1000)
+    } else {
+      this.setState({ timeInSeconds: seconds })
     }
-    this.setState({ timeInSeconds: seconds })
   }
 
   render() {
