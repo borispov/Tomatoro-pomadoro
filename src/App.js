@@ -17,11 +17,16 @@ class App extends Component {
   }
 
   handleSettingsChange = async (value, type) => {
+    const { isBreak } = this.state
     if (type === 'break') {
-      await this.setState({ breaklength: value })
+      isBreak
+        ? this.setState({ breaklength: value, timeInSeconds: value * 60 })
+        : this.setState({ breaklength: value })
     }
     if (type === 'session') {
-      await this.setState({ workTime: value, timeInSeconds: value * 60 })
+      !isBreak
+        ? this.setState({ workTime: value, timeInSeconds: value * 60 })
+        : this.setState({ workTime: value })
     }
   }
 
@@ -29,7 +34,7 @@ class App extends Component {
     this.setState({
       isBreak: false,
       isPaused: true,
-      timeInSeconds: this.state.workTime * 60
+      timeInSeconds: 25 * 60
     })
     clearInterval(this.timer)
   }
@@ -41,7 +46,7 @@ class App extends Component {
     this.audio.play()
     setTimeout(() => {
       this.audio.pause()
-    }, 3000)
+    }, 1200)
   }
 
   handlePlayButton = () => {

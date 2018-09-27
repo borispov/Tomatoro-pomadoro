@@ -5,7 +5,6 @@ export default props => {
   let sessInput = React.createRef()
 
   const handleSessionValue = e => {
-    console.log(e.target.value)
     if (!isNaN(Number(e.target.value))) {
       props.sessionChange(e.target.value)
     }

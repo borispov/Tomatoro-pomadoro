@@ -27,8 +27,8 @@ export class ClockButtons extends Component {
     this.props.handleSettingsChange(value, 'break')
   }
 
-  handleSessionValue = async value => {
-    await this.props.handleSettingsChange(value, 'session')
+  handleSessionValue = value => {
+    this.props.handleSettingsChange(value, 'session')
   }
 
   handleCloseSettings = () => {
