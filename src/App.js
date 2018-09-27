@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import './styles/css/index.css'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Showtime from './components/Showtime'
 import ClockButtons from './components/ClockButtons'
 import Analog from './assets/audio/analog.mp3'
@@ -87,6 +88,7 @@ class App extends Component {
           playButton={this.handlePlayButton}
           resButton={this.handleReset}
         />
+        <Footer />
       </div>
     )
   }
