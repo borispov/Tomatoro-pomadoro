@@ -3,12 +3,14 @@ import './styles/css/index.css'
 import Header from './components/Header'
 import Showtime from './components/Showtime'
 import ClockButtons from './components/ClockButtons'
+import Analog from './assets/audio/analog.mp3'
+import TempleBell from './assets/audio/temple-bell.mp3'
 
 class App extends Component {
   state = {
     breaklength: 5,
     workTime: 25,
-    timeInSeconds: 25 * 60,
+    timeInSeconds: 25 * 60, // default hard-coded :)
     isPaused: true,
     isBreak: false
   }
@@ -31,6 +33,16 @@ class App extends Component {
     clearInterval(this.timer)
   }
 
+  playAlarm = () => {
+    const { isBreak } = this.state
+    const alarmSrc = isBreak ? Analog : TempleBell
+    this.audio = new Audio(alarmSrc)
+    this.audio.play()
+    setTimeout(() => {
+      this.audio.pause()
+    }, 3000)
+  }
+
   handlePlayButton = () => {
     clearInterval(this.timer)
     const isPaused = this.state.isPaused
@@ -46,6 +58,7 @@ class App extends Component {
     seconds--
     if (seconds <= 0) {
       clearInterval(this.timer)
+      this.playAlarm()
       const newTimes = (isBreak ? workTime : breaklength) * 60
       await this.setState({
         timeInSeconds: newTimes,
